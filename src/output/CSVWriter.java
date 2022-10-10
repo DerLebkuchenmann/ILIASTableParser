@@ -34,10 +34,12 @@ public class CSVWriter {
 	}
 
 	public void closeWriter() {
-		try {
-			bufWr.close();
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+		if (bufWr != null) {
+			try {
+				bufWr.close();
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 }
