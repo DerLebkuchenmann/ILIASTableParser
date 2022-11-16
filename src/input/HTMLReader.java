@@ -15,6 +15,15 @@ public class HTMLReader {
 	
 	private void readHTML(File file) throws IOException {
 		Document doc = Jsoup.parse(file);
+		Elements tblheaders = doc.select("a[class=tblheader]");
+		// save headers
+		LinkedList<String> tblHeaderList = new LinkedList<>();
+		for(Element tblheader : tblheaders) {
+			tblHeaderList.add(tblheader.text());
+		}
+		storage.add(tblHeaderList);
+		
+		// save data
 		Elements rows = doc.select("tr[class^=tblrow]");
 		Elements values;
 		for(Element row : rows) {
