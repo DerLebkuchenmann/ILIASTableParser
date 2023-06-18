@@ -12,6 +12,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -30,6 +31,7 @@ public class TPGui extends JFrame {
 	private HTMLReader reader;
 	private CSVWriter writer;
 	private JScrollPane openScroll, saveScroll;
+	private JScrollBar horizontalScrollBar, verticalScrollBar;
 
 	public TPGui() {
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -82,18 +84,24 @@ public class TPGui extends JFrame {
 			openFileChooser.setCurrentDirectory(new File(openPath.getText()));
 			int returnVal = openFileChooser.showOpenDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				verticalScrollBar = openScroll.getHorizontalScrollBar();
 				openPath.setText(openFileChooser.getSelectedFile().getAbsolutePath());
-				openScroll.getHorizontalScrollBar().setValue(100000000);
-				this.pack();
+				verticalScrollBar.setValue(verticalScrollBar.getMaximum());
+				//this.pack();
 			}
 		});
 		saveFileBtn.addActionListener(e -> {
 			saveFileChooser.setCurrentDirectory(new File(savePath.getText()));
 			int returnVal = saveFileChooser.showSaveDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				savePath.setText(saveFileChooser.getSelectedFile().getAbsolutePath());
-				saveScroll.getHorizontalScrollBar().setValue(100000000);
-				this.pack();
+				String destination = saveFileChooser.getSelectedFile().getAbsolutePath();
+				if(saveFileChooser.getFileFilter().equals(outputFileFilter) && !destination.endsWith("csv")) {
+					destination += ".csv";
+				}
+				savePath.setText(destination);
+				horizontalScrollBar = saveScroll.getHorizontalScrollBar();
+				horizontalScrollBar.setValue(horizontalScrollBar.getMaximum());
+				//this.pack();
 			}
 		});
 		convert.addActionListener(e -> {
