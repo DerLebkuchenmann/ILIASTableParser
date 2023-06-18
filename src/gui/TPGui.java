@@ -11,6 +11,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileFilter;
 
 import input.HTMLReader;
 import output.CSVWriter;
@@ -20,6 +21,7 @@ public class TPGui extends JFrame {
 	private Container c;
 	private JPanel base;
 	private JFileChooser fileChooser;
+	private FileFilter fileFilter;
 	private JButton openFile;
 	private HTMLReader reader;
 	private CSVWriter writer;
@@ -37,6 +39,19 @@ public class TPGui extends JFrame {
 		c = this.getContentPane();
 		base = new JPanel();
 		fileChooser = new JFileChooser();
+		fileFilter = new FileFilter() {
+			
+			@Override
+			public String getDescription() {
+				return "HTML";
+			}
+			
+			@Override
+			public boolean accept(File f) {
+				return (f.getName().matches(".+\\.htm.*"));
+			}
+		};
+		fileChooser.setFileFilter(fileFilter);
 		openFile = new JButton("Open HTML file");
 		c.add(base);
 		base.add(openFile);
