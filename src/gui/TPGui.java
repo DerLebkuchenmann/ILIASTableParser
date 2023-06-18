@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import input.HTMLReader;
 import output.CSVWriter;
@@ -24,7 +24,7 @@ public class TPGui extends JFrame {
 	private Container c;
 	private JPanel base, inputPanel, outputPanel;
 	private JFileChooser openFileChooser, saveFileChooser;
-	private FileFilter inputFileFilter, outputFileFilter;
+	private FileNameExtensionFilter inputFileFilter, outputFileFilter;
 	private JButton openFileBtn, saveFileBtn, convert;
 	private JTextField openPath, savePath;
 	private HTMLReader reader;
@@ -63,31 +63,9 @@ public class TPGui extends JFrame {
 		saveScroll = new JScrollPane(savePath);
 		saveScroll.setAutoscrolls(true);
 		outputPanel.add(saveScroll);
-		inputFileFilter = new FileFilter() {
-
-			@Override
-			public String getDescription() {
-				return "HTML";
-			}
-
-			@Override
-			public boolean accept(File f) {
-				return (f.getName().matches(".+\\.htm.*"));
-			}
-		};
+		inputFileFilter = new FileNameExtensionFilter("HTML", "htm", "html");
 		openFileChooser.setFileFilter(inputFileFilter);
-
-		outputFileFilter = new FileFilter() {
-			@Override
-			public String getDescription() {
-				return "CSV";
-			}
-
-			@Override
-			public boolean accept(File f) {
-				return (f.getName().matches(".+\\.csv"));
-			}
-		};
+		outputFileFilter = new FileNameExtensionFilter("CSV", "csv");
 		saveFileChooser.setFileFilter(outputFileFilter);
 
 		c.add(base);
